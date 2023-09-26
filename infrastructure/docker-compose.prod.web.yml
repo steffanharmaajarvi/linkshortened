@@ -1,0 +1,25 @@
+version: "2"
+
+services:
+    nginx:
+        ports:
+            - "80:80"
+            - "443:443"
+        build:
+            args:
+                env: prod
+        volumes:
+            - /var/log/nginx:/var/log/nginx/
+            - ./.certbot/www:/var/www/certbot/:ro
+            - ./.certbot/conf/:/etc/nginx/ssl/:ro
+        restart: always
+
+    php_fpm:
+        build:
+            args:
+                env: prod
+        volumes:
+            - ../:/application
+            - /var/log/application:/application/var/log
+            - /var/cache:/application/var/cache
+        restart: always

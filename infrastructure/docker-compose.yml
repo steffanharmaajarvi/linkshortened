@@ -1,0 +1,27 @@
+version: "2"
+
+services:
+    nginx:
+        build:
+            context: .
+            dockerfile: ./nginx/Dockerfile
+        container_name: nginx
+        working_dir: /application
+        volumes_from:
+            - php_fpm
+
+    php_fpm:
+        build: php-fpm
+        container_name: php-fpm
+        working_dir: /application
+
+    database:
+        image: mariadb:10.4
+        container_name: database
+        working_dir: /application
+        volumes:
+            - ./mysql/.db:/var/lib/mysql
+        env_file:
+            - ../.env.local
+        ports:
+            - "3315:3306"

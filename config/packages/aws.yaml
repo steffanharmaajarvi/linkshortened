@@ -1,0 +1,20 @@
+framework:
+  secret: "Rosebud was the name of his sled."
+
+aws:
+  version: latest
+  region: '%env(AWS_S3_REGION)%'
+  credentials:
+    key: '%env(AWS_KEY)%'
+    secret: '%env(AWS_SECRET)%' # this will be escaped as '@not-a-real-secret'
+  S3:
+    version: '2006-03-01'
+  Sqs:
+    credentials: "@a_service"
+
+services:
+  a_service:
+    class: Aws\Credentials\Credentials
+    arguments:
+      - a-different-fake-key
+      - a-different-fake-secret
