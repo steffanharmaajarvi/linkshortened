@@ -47,7 +47,7 @@ class LinkController extends AbstractController
         if ($violations->count() > 0) {
             return new JsonResponse([
                 'error' => $violations->get(0)->getMessage()
-            ], status: 400);
+            ], status: 422);
         }
 
         $link = $requestData['link'];
